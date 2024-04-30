@@ -37,38 +37,41 @@ productList.push( {
     name: 'Scooter',
     price: 180,
     icon: './icons/bt_add_to_cart.svg',
+    description: 'A nice scooter for kids to enjoy outdoors',
 })
 productList.push( {
     image: 'https://img.freepik.com/free-photo/view-electronic-product-balancing-podium_23-2150141323.jpg?t=st=1714431289~exp=1714434889~hmac=05aec79b8d12b26eb8643d2d28b3de02c65a67bfe86aedf530061ea52bfa1159&w=740',
     name: 'Camara',
     price: 150,
     icon: './icons/bt_add_to_cart.svg',
+    description: 'A high-quality camera for your photography needs',
+
 })
 productList.push( {
     image: 'https://img.freepik.com/free-photo/levitating-music-headphones-display_23-2149817602.jpg?t=st=1714431207~exp=1714434807~hmac=4767bf962cb433e3c6e083101fbada9c77d163fabe692be5fce65d4acbca69f4&w=740',
     name: 'Audifonos',
     price: 20,
     icon: './icons/bt_add_to_cart.svg',
-    description: 'With its practical position, this bike also fulfills a decorative function, add your hall or workspace'
+    description: 'Lightweight headphones with great sound quality',
 })
 productList.push( {
     image: 'https://img.freepik.com/free-vector/realistic-virtual-reality-headset_52683-52870.jpg?t=st=1714431719~exp=1714435319~hmac=c309a73684d1960beeab08c0184388e69d4d034682125a9ddadf687724e14f2d&w=826',
     name: 'Lentes VR',
     price: 300,
     icon: './icons/bt_add_to_cart.svg',
+    description: 'Experience virtual reality with these VR glasses',
 })
 
 
-
-for (product of productList) {
+function showProducts() {
+    productList.forEach((product) => {
     const productCard = document.createElement('div')
     productCard.classList.add('product-card')
     
 
     const productImg = document.createElement('img')
     productImg.setAttribute('src', product.image)
-    productImg.classList.add('.product-img')
-
+   
     const productInfo = document.createElement('div')
     productInfo.classList.add('product-info')
 
@@ -99,39 +102,77 @@ for (product of productList) {
     productCard.appendChild(productImg)
     productCard.appendChild(productInfo)
    
+    productImg.addEventListener('click', () => {
+        showProductDetails(product);
+    });
+    
     cardContainer.appendChild(productCard)
-
-    productImg.addEventListener('click', toggleImg)
-    function toggleImg() {
-        productDetail.classList.toggle('inactive')  
-    }
- function showDetails(product) {
-
-
-
-
-   const productAsideName = document.createElement('p')
-   productAsideName.textContent = `${product.name}`
-   
-
-   productDetail.appendChild(productAsideName)
+});
 }
-/*
-<aside class="product-detail product-detail-secondary inactive">
-    <div class="product-detail-close">
-      <img src="./icons/icon_close.png" alt="close">
-    </div>
-    <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="bike">
-    <div class="product-info">
-      <p>$35,00</p>
-      <p>Bike</p>
-      <p>With its practical position, this bike also fulfills a decorative function, add your hall or workspace.</p>
-      <button class="primary-button add-to-cart-button">
-        <img src="./icons/bt_add_to_cart.svg" alt="add to cart">
-        Add to cart
-      </button>
-    </div>
-  </aside>
-*/
+
+function showProductDetails(product) {
+// Limpia el contenido existente del product-detail-secondary
+productDetail.innerHTML = ''
+
+// Abre el aside
+productDetail.classList.remove('inactive')
+
+// Crea el contenido para mostrar el detalle del producto
+const productDetailImg = document.createElement('img')
+productDetailImg.setAttribute('src', product.image);
+
+const productInfoDetail = document.createElement('div')
+productInfoDetail.classList.add('product-info')
+productInfoDetail.style.display = 'flex'
+productInfoDetail.style.flexDirection ='column'
+productInfoDetail.style.alignItems = 'left'
+
+const productDetailName = document.createElement('p')
+productDetailName.innerText = product.name;
+
+const productDetailPrice = document.createElement('p')
+productDetailPrice.innerText = `$${product.price}`;
+productDetailPrice.classList.add('productDetail-price')
+productDetailPrice.style.color = '#000000'
+productDetailPrice.style.fontSize = '20px'
+
+
+
+const productDetailDescription = document.createElement('p')
+productDetailDescription.innerText = product.description
+const closeButton = document.createElement('div')
+closeButton.classList.add('product-detail-close')
+
+const closeButtonImg = document.createElement('img')
+closeButtonImg.setAttribute('src', './icons/icon_close.png')
+
+const addCartButton = document.createElement('button')
+addCartButton.classList.add('.primary-button')
+addCartButton.style.border = 'none'
+addCartButton.style.background = 'none'
+
+const addCartImg = document.createElement('img')
+addCartImg.setAttribute('src', './icons/bt_add_to_cart.svg')
+addCartImg.classList.add('add-to-cart-button')
+ addCartButton.appendChild(addCartImg)
+
+closeButton.appendChild(closeButtonImg);
+closeButton.addEventListener('click', () => {
+    productDetail.classList.add('inactive')
+});
+productInfoDetail.appendChild(productDetailName)
+productInfoDetail.appendChild(productDetailDescription)
+productInfoDetail.appendChild(productDetailPrice)
+
+
+productInfoDetail.appendChild(addCartButton)
+productDetail.appendChild(closeButton);
+
+productDetail.appendChild(productDetailImg);
+
+productDetail.appendChild(productInfoDetail)
+
 
 }
+
+showProducts()
