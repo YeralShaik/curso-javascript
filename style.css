@@ -275,7 +275,7 @@
     font-size: var(--md);
     margin-top: 0;
     margin-bottom: 4px;
-    justify-content: left;
+
   }
   .product-info div p:nth-child(2) {
     font-size: var(--sm);

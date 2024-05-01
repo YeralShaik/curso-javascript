@@ -15,18 +15,24 @@ menuCartIcon.addEventListener('click', toggleAside)
 
     function toggleDesktopMenu() {
         desktopMenu.classList.toggle('inactive')
+        productDetail.classList.add('inactive')
+        aside.classList.add('inactive')
     }
 
 //Abrir y cerrar el carrito 
     function toggleMobileMenu() {
         mobileMenu.classList.toggle('inactive')
+        desktopMenu.classList.add('inactive')
         aside.classList.add('inactive')
+        productDetail.classList.add('inactive')
     }  
 
 //Abrir y cerrar el aside 
     function toggleAside() {
          aside.classList.toggle('inactive')
+         desktopMenu.classList.add('inactive')
          mobileMenu.classList.add('inactive')
+         productDetail.classList.add('inactive')
         }
 
 
@@ -92,7 +98,8 @@ function showProducts() {
 
     const productImgCart= document.createElement('img')
     productImgCart.setAttribute('src', './icons/bt_add_to_cart.svg')
-
+    productImgCart.classList.add('add-to-cart-button')
+    productImgCart.style.cursor = 'pointer'
 
     productInfoFigure.appendChild(productImgCart)
 
@@ -104,8 +111,14 @@ function showProducts() {
    
     productImg.addEventListener('click', () => {
         showProductDetails(product);
+        aside.classList.add('inactive')
+         mobileMenu.classList.add('inactive')
+         desktopMenu.classList.add('inactive')
     });
-    
+    productImgCart.addEventListener('click', () => {
+        addToCart()
+        
+    })
     cardContainer.appendChild(productCard)
 });
 }
@@ -150,10 +163,12 @@ const addCartButton = document.createElement('button')
 addCartButton.classList.add('.primary-button')
 addCartButton.style.border = 'none'
 addCartButton.style.background = 'none'
+addCartButton.style.cursor = 'pointer'
 
 const addCartImg = document.createElement('img')
 addCartImg.setAttribute('src', './icons/bt_add_to_cart.svg')
 addCartImg.classList.add('add-to-cart-button')
+
  addCartButton.appendChild(addCartImg)
 
 closeButton.appendChild(closeButtonImg);
@@ -171,8 +186,6 @@ productDetail.appendChild(closeButton);
 productDetail.appendChild(productDetailImg);
 
 productDetail.appendChild(productInfoDetail)
-
-
+   
 }
-
 showProducts()
